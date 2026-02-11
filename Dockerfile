@@ -52,6 +52,22 @@ RUN apt-get update && apt-get install -y libc-client-dev
 # Clean up the added repository and pin file
 RUN rm /etc/apt/sources.list.d/buster.list && apt-get update;
 
+RUN set -ex; \
+    docker-php-ext-configure imap --with-kerberos --with-imap-ssl; \
+    docker-php-ext-install \
+        bz2 \
+        imap \
+    ; \
+    pecl install smbclient; \
+    docker-php-ext-enable smbclient; \
+    \
+    rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p \
+    /var/log/supervisord \
+    /var/run/supervisord \
+;
+
 COPY nextcloud-entrypoint.sh /
 COPY supervisord.conf /etc/
 
