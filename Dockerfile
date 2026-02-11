@@ -53,7 +53,7 @@ RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && pecl install imagick smbclient \
     && docker-php-ext-enable imagick smbclient \
     && rm -rf /var/lib/apt/lists/*
-;
+
 RUN mkdir -p \
     /var/log/supervisord \
     /var/run/supervisord \
