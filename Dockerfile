@@ -33,7 +33,7 @@ RUN mkdir -p /usr/share/man/man1 \
         libmagickwand-dev \
         libgmp3-dev \
 #        libc-client-dev \ # Throws error with Trixie
-        libkrb5-dev \
+#        libkrb5-dev \ # Throws error with Trixie
         smbclient \
         libsmbclient-dev \
         inotify-tools \
@@ -47,7 +47,7 @@ RUN mkdir -p /usr/share/man/man1 \
 RUN echo "deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list.d/buster.list
 
 # Install libc-client-dev package from Buster repository
-RUN apt-get update && apt-get install -y libc-client-dev
+RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev
 
 # Clean up the added repository and pin file
 RUN rm /etc/apt/sources.list.d/buster.list && apt-get update;
