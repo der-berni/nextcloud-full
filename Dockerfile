@@ -37,11 +37,7 @@ RUN mkdir -p /usr/share/man/man1 \
         smbclient \
         libsmbclient-dev \
         inotify-tools \
-    && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-    && docker-php-ext-install bz2 gmp imap \
-    && pecl install imagick smbclient \
-    && docker-php-ext-enable imagick smbclient 
+    ;
 # # # Workaround: libc-client-dev is installed from buster image
 # Add Buster repository for libc-client-dev only
 RUN echo "deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list.d/buster.list
@@ -52,16 +48,11 @@ RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev
 # Clean up the added repository and pin file
 RUN rm /etc/apt/sources.list.d/buster.list && apt-get update;
 
-RUN set -ex; \
-    docker-php-ext-configure imap --with-kerberos --with-imap-ssl; \
-    docker-php-ext-install \
-        bz2 \
-        imap \
-    ; \
-    pecl install smbclient; \
-    docker-php-ext-enable smbclient; \
-    \
-    rm -rf /var/lib/apt/lists/*
+RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install bz2 gmp imap \
+    && pecl install imagick smbclient \
+    && docker-php-ext-enable imagick smbclient 
+    && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p \
     /var/log/supervisord \
