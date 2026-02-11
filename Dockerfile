@@ -43,7 +43,7 @@ RUN mkdir -p /usr/share/man/man1 \
 RUN echo "deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list.d/buster.list
 
 # Install libc-client-dev package from Buster repository
-RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev
+RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev;
 
 # Clean up the added repository and pin file
 RUN rm /etc/apt/sources.list.d/buster.list && apt-get update;
@@ -51,9 +51,9 @@ RUN rm /etc/apt/sources.list.d/buster.list && apt-get update;
 RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install bz2 gmp imap \
     && pecl install imagick smbclient \
-    && docker-php-ext-enable imagick smbclient 
+    && docker-php-ext-enable imagick smbclient \
     && rm -rf /var/lib/apt/lists/*
-
+;
 RUN mkdir -p \
     /var/log/supervisord \
     /var/run/supervisord \
