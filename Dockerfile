@@ -32,7 +32,7 @@ RUN mkdir -p /usr/share/man/man1 \
         ffmpeg \
         libmagickwand-dev \
         libgmp3-dev \
-        libc-client-dev \
+#        libc-client-dev \ # Throws error with Trixie
         libkrb5-dev \
         smbclient \
         libsmbclient-dev \
@@ -42,6 +42,16 @@ RUN mkdir -p /usr/share/man/man1 \
     && docker-php-ext-install bz2 gmp imap \
     && pecl install imagick smbclient \
     && docker-php-ext-enable imagick smbclient 
+# # # Workaround: libc-client-dev is installed from buster image
+# Add Buster repository for libc-client-dev only
+RUN echo "deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list.d/buster.list
+
+# Install libc-client-dev package from Buster repository
+RUN apt-get update && apt-get install -y libc-client-dev
+
+# Clean up the added repository and pin file
+RUN rm /etc/apt/sources.list.d/buster.list && apt-get update;
+
 COPY nextcloud-entrypoint.sh /
 COPY supervisord.conf /etc/
 
