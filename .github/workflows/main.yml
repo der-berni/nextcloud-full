@@ -3,10 +3,9 @@ name: docker-build-push
 on:
   release:
     types: [published]
-  push:
-    branches:
-      - 'main'
-      - 'pylint'
+  schedule:
+    - cron: '0 2 1 * *'  # Runs daily at midnight UTC
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
   docker:
