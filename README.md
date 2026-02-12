@@ -21,11 +21,6 @@ The required steps for each optional/recommended package that is not already in 
 `pecl install imagick`  
 `docker-php-ext-enable imagick`  
 
-#### PHP Module imap
-`apt install libc-client-dev libkrb5-dev`  
-`docker-php-ext-configure imap --with-kerberos --with-imap-ssl`  
-`docker-php-ext-install imap`  
-
 #### PHP Module gmp
 `apt install libgmp3-dev`  
 `docker-php-ext-install gmp`  
