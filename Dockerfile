@@ -30,15 +30,12 @@ RUN mkdir -p /usr/share/man/man1 \
     && apt-get update && apt-get install -y \
         supervisor \
         ffmpeg \
-        libmagickwand-dev \
-        libgmp3-dev \
         smbclient \
         libsmbclient-dev \
         inotify-tools \
     && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-install bz2 gmp \
-    && pecl install imagick smbclient \
-    && docker-php-ext-enable imagick smbclient 
+    && docker-php-ext-install bz2 \
+    && docker-php-ext-enable smbclient 
 COPY nextcloud-entrypoint.sh /
 COPY supervisord.conf /etc/
 
