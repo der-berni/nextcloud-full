@@ -32,7 +32,7 @@ RUN mkdir -p /usr/share/man/man1 \
         ffmpeg \
         smbclient \
         libsmbclient-dev \
-        bzip2-dev \
+        libbz2-dev \
         inotify-tools \
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install bz2 \
