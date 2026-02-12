@@ -36,6 +36,7 @@ RUN mkdir -p /usr/share/man/man1 \
         inotify-tools \
     && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install bz2 \
+    && pecl install smbclient \
     && docker-php-ext-enable smbclient 
 COPY nextcloud-entrypoint.sh /
 COPY supervisord.conf /etc/
