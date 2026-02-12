@@ -1,11 +1,11 @@
-FROM nextcloud:30.0-apache
+FROM nextcloud:31.0-apache
 
 ########################################
 #               Build                  #
 ########################################
-ARG VERSION "30.0"
+ARG VERSION "31.0"
 ARG DOWNLOADURL "https://github.com/nextcloud/docker"
-ARG BUILD_DATE="2024-10-08T14:00:10Z"
+ARG BUILD_DATE="2026-02-12T00:00:00Z"
 ########################################
 
 # Basic build-time metadata as defined at http://label-schema.org
@@ -32,33 +32,16 @@ RUN mkdir -p /usr/share/man/man1 \
         ffmpeg \
         libmagickwand-dev \
         libgmp3-dev \
-#        libc-client-dev \ # Throws error with Trixie
-#        libkrb5-dev \ # Throws error with Trixie
+        libc-client-dev \
+        libkrb5-dev \
         smbclient \
         libsmbclient-dev \
         inotify-tools \
-    ;
-# # # Workaround: libc-client-dev is installed from buster image
-# Add Buster repository for libc-client-dev only
-RUN echo "deb [signed-by=/usr/share/keyrings/debian-archive-keyring.gpg] http://archive.debian.org/debian/ buster main" > /etc/apt/sources.list.d/buster.list
-
-# Install libc-client-dev package from Buster repository
-RUN apt-get update && apt-get install -y libc-client-dev libkrb5-dev;
-
-# Clean up the added repository and pin file
-RUN rm /etc/apt/sources.list.d/buster.list && apt-get update;
-
-RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install bz2 gmp imap \
     && pecl install imagick smbclient \
-    && docker-php-ext-enable imagick smbclient \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN mkdir -p \
-    /var/log/supervisord \
-    /var/run/supervisord \
-;
-
+    && docker-php-ext-enable imagick smbclient 
 COPY nextcloud-entrypoint.sh /
 COPY supervisord.conf /etc/
 
