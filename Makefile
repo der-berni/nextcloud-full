@@ -1,14 +1,14 @@
 all: build stop start
 
 build:
-	docker build -t t4skforce/nextcloud-full:latest .
+	docker build -t ghcr.io/der-berni/nextcloud-full:latest .
 
 stop:
 	docker stop nextcloud-full || true
 
 start:
-	docker run -it --rm --name nextcloud-full t4skforce/nextcloud-full:latest
+	docker run -it --rm --name nextcloud-full ghcr.io/der-berni/nextcloud-full:latest
 
 clean:
 	docker rm nextcloud-full || true
-	docker rmi t4skforce/nextcloud-full:latest || true
+	docker rmi ghcr.io/der-berni/nextcloud-full:latest || true
