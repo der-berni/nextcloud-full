@@ -1,9 +1,9 @@
-FROM nextcloud:33.0-apache
+FROM nextcloud:34.0-apache
 
 ########################################
 #               Build                  #
 ########################################
-ARG VERSION "33.0"
+ARG VERSION "34.0"
 ARG DOWNLOADURL "https://github.com/nextcloud/docker"
 ARG BUILD_DATE="2025-05-12T07:16:55Z"
 ########################################
