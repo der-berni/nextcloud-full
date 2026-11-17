@@ -3,9 +3,9 @@ FROM nextcloud:34.0-apache
 ########################################
 #               Build                  #
 ########################################
-ARG VERSION "34.0"
+ARG VERSION "35.0"
 ARG DOWNLOADURL "https://github.com/nextcloud/docker"
-ARG BUILD_DATE="2025-05-12T07:16:55Z"
+ARG BUILD_DATE="2026-11-17T11:47:45Z"
 ########################################
 
 # Basic build-time metadata as defined at http://label-schema.org
